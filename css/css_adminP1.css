@@ -1,0 +1,167 @@
+body {
+    margin-top: 0px !important;
+  }
+  
+  .custom-width {
+    max-width: 280px; /* Ajusta el ancho según tus necesidades */
+  }
+  
+  @media (max-width: 991.98px) {
+    .navbar-collapse {
+      background-color: #f11811; /* Color bg-dark */
+      padding: 10px; /* Margen interno */
+    }
+    .navbar-nav .nav-item .nav-link {
+      margin: 5px 0; /* Margen externo */
+      padding: 10px; /* Margen interno */
+      border-radius: 5px; /* Bordes redondeados */
+    }
+    .navbar-nav .nav-item .nav-link:hover {
+      background-color: #0381ff; /* Color de fondo al hacer hover */
+    }
+  }
+  
+  .btn-orange {
+    background-color: #ff0000 !important; /* Color rojo */
+    border-color: #ff0000 !important; /* Borde color rojo */
+    color: white !important;
+  }
+  .btn-orange:hover {
+    background-color: #e60000 !important; /* Color rojo al hacer hover */
+    border-color: #e60000 !important;
+  }
+  
+  #exportToExcelButton {
+      position: fixed;
+      bottom: 50px;
+      right: 20px;
+      z-index: 1000;
+  }
+  
+  /* ----------------------------------------------------------------------------------------------- */
+  /* Diseño de la TABLA */
+  .table th, .table td {
+    font-size: 0.875rem; /* Reducir el tamaño de la fuente */
+    padding: 0.25rem; /* Reducir el padding */
+  }
+  .table th:first-child, .table td:first-child {
+    width: 4%;
+  }
+  .table th:nth-child(2), .table td:nth-child(2) {
+    width: 7%;
+  }
+  .table th:nth-child(3), .table td:nth-child(3) {
+    width: 7%;
+  }
+  .table th:nth-child(4), .table td:nth-child(4) {
+    width: 8.5%;
+  }
+  .table th:nth-child(5), .table td:nth-child(5) {
+    width: 11.8%;
+  }
+  .table th:nth-child(6), .table td:nth-child(6) {
+    width: 8.8%;
+  }
+  .table th:nth-child(7), .table td:nth-child(7) {
+    width: 18.1%;
+  }
+  .table th:nth-child(8), .table td:nth-child(8) {
+    width: 15%;
+  }
+  .table th:nth-child(9), .table td:nth-child(9) {
+    width: 9.3%;
+  }
+  .table th:nth-child(10), .table td:nth-child(10) {
+    width: 8.5%;
+  }
+  .img-thumbnail {
+    max-width: 50px; /* Reducir el tamaño máximo de la imagen */
+  }
+  .btn-group .btn {
+    font-size: 0.75rem; /* Reducir el tamaño de la fuente de los botones */
+    padding: 0.25rem 0.5rem; /* Reducir el padding de los botones */
+  }
+  
+  
+  .imgTabla{
+    height: 150px;
+    width: 160px ;
+    border-radius: 5%;
+  }
+  
+   /* Estilo personalizado para los campos de la tabla */
+  .table th, .table td {
+    background-color: #f8f9fa; /* Fondo gris claro */
+  }
+  .thead-dark th {
+    background-color: #21358f !important; /* Fondo azul oscuro */
+    color: #D8D8D8 !important;
+  }
+   /* Estilo personalizado para los campos de la tabla - botones*/
+  .btn-uwu {
+    background-color: #DA9C5A !important; /* Color naranja */
+    border-color: #DA9C5A !important; /* Borde color naranja */
+    color: white !important;
+  }
+  .btn-uwu:hover {
+    background-color: #CA9053 !important; /* Color naranja oscuro al hacer hover */
+    border-color: #CA9053 !important;
+  }
+  /* ----------------------------------------------------------------------------------------------- */
+  
+  /* Estilos para el botón de ir al tope de la página */
+  .scroll-to-top {
+      position: fixed;
+      bottom: 110px; /* Ajustado para dejar espacio para el botón de exportar */
+      left: 20px;
+      z-index: 1000;
+      width: 20px;
+      height: 20px;
+      background-color: #f39c12; /* Color naranja */
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      font-size: 14px;
+      transition: opacity 0.3s, visibility 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none; /* Elimina cualquier subrayado */
+      opacity: 0; /* Inicia oculto */
+      visibility: hidden; /* Inicia oculto */
+  }
+  
+  .scroll-to-top i {
+      color: white;
+  }
+  
+  .scroll-to-top:hover {
+      background-color: #e67e22; /* Color naranja más oscuro al pasar el cursor */
+  }
+  
+  /* Estilos para el botón de exportar a Excel */
+  .export-to-excel {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+    width: 20px;
+    height: 20px;
+    background-color: #28a745; /* Color verde */
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 14px;
+    transition: opacity 0.3s, visibility 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .export-to-excel i {
+    color: white;
+    margin: auto; /* Asegura que el ícono esté centrado */
+  }
+  .export-to-excel:hover {
+    background-color: #218838; /* Color verde más oscuro al pasar el cursor */
+  }
+  
