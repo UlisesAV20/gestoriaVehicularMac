@@ -34,7 +34,7 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
       <div class="container-fluid">
-        <a class="navbar-brand" href="invenario.php">
+        <a class="navbar-brand" href="inventario.php">
           <img src="images/mac-computadoras-logo.jpg" width="50px" height="50px" alt="" title="" />
         </a>
 
@@ -49,12 +49,10 @@
                   <div class="input-group custom-width me-2">
                     <select class="form-select custom-width" name="ub">         
                       <option value="">Ver todo</option>
-                      <option value="Almacen">Cuernavaca</option>
-                      <option value="Direccion">CDMX</option>
-                      <option value="Secretaria Academica (Direccion)">Puebla</option>
-                      <option value="Secretaria de Investigacion (Direccion)">Tijuana</option>
-
-                      
+                      <option value="cuernavaca">Cuernavaca</option>
+                      <option value="CDMX">CDMX</option>
+                      <option value="Puebla">Puebla</option>
+                      <option value="Tijuana<">Tijuana</option>
                     </select>
                     <button class="btn btn-orange" type="submit">
                       <i class="fa fa-check"></i>
@@ -72,13 +70,10 @@
                 <a href="admin-inventario_nuevo.php" class="nav-link"><i class="fas fa-plus-circle"></i><span class="nav-link-text"> Agregar nuevo</span></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="adminP1.php"><i class="fas fa-home"></i><span class="nav-link-text"> Inicio</span></a>
+                <a class="nav-link" href="inventario.php"><i class="fas fa-home"></i><span class="nav-link-text"> Inicio</span></a>
               </li>
                             <li class="nav-item">
                   <a class="nav-link" href="admin-administrador.php"><i class="fas fa-users"></i>&nbsp;Usuarios</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="llaves/index.php"><i class="fas fa-box-open"></i>&nbsp;Prestamos</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="admin-bajas.php"><i class="fas fa-fw fa-swatchbook"></i><span class="nav-link-text">Bajas</span></a>
@@ -131,9 +126,31 @@
         <?php
         // Consulta para obtener los registros
         $sql = "SELECT * FROM materiales";
+        // Verificar si hay término de búsqueda
+        if (isset($_GET['buscar']) && !empty($_GET['buscar'])) {
+            $busqueda = $conn->real_escape_string($_GET['buscar']);
+            $sql = "SELECT * FROM materiales WHERE 
+                    n_resguardo LIKE '%$busqueda%' OR 
+                    codigo_material LIKE '%$busqueda%' OR 
+                    tipo_activo LIKE '%$busqueda%' OR 
+                    descripcion LIKE '%$busqueda%' OR 
+                    ubicacion LIKE '%$busqueda%' OR 
+                    observaciones LIKE '%$busqueda%'";
+        }
+        
+        // Verificar si hay filtro de ubicación
+        if (isset($_GET['ub']) && !empty($_GET['ub'])) {
+            $ubicacion = $conn->real_escape_string($_GET['ub']);
+            if (strpos($sql, 'WHERE') !== false) {
+                $sql .= " AND ubicacion = '$ubicacion'";
+            } else {
+                $sql .= " WHERE ubicacion = '$ubicacion'";
+            }
+        }
+        
         $resultado = $conn->query($sql);
         $contador = 1;
-
+        
         if ($resultado->num_rows > 0) {
             while ($fila = $resultado->fetch_assoc()) {
                 echo "<tr>";
@@ -146,16 +163,17 @@
                 echo "<td>{$fila['observaciones']}</td>";
                 echo "<td><img src='fotos/{$fila['foto']}' width='200'></td>";
                 echo "<td>{$fila['fecha_alta']}</td>";
-                echo "<td>
-                        <a href='editar.php?id={$fila['id']}'>Editar</a> | 
-                        <a href='eliminar.php?id={$fila['id']}'>Eliminar</a>
-                        <a href='eliminar.php?id={$fila['id']}'>baja</a>
+                echo "<td class='text-center align-middle'>
+                <div class='btn-group-vertical mb-2' role='group'>
+                        <a href='editar.php?id={$fila['id']}'class='btn btn-danger btn-sm mb-2'>Editar</a>  
+                        <a href='eliminar.php?id={$fila['id']}' class='btn btn-danger btn-sm mb-2' onclick='return confirm(\"¿Estás seguro de que deseas eliminar este artículo?\");'>Eliminar</a>
+                        <a href='baja.php?id={$fila['id']}'class='btn btn-danger btn-sm mb-2'>baja</a>
                       </td>";
                 echo "</tr>";
                 $contador++;
             }
         } else {
-            echo "<tr><td colspan='10'>No hay datos registrados.</td></tr>";
+            echo "<tr><td colspan='10'>No hay datos registrados que coincidan con la búsqueda.</td></tr>";
         }
         ?>
                       </thead>

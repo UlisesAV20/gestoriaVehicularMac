@@ -23,10 +23,10 @@ $resultado = $stmt->get_result();
 
 if ($resultado->num_rows > 0) {
     $_SESSION['usuario'] = $usuario;  // Guarda sesión
-    header('Location: inventario.html');
+    header('Location: inventario.php');
     exit();
 } else {
-    echo "<script>alert('Usuario o contraseña incorrectos'); window.location.href='login.html';</script>";
+    echo "<script>alert('Usuario o contraseña incorrectos'); window.location.href='index.html';</script>";
 }
 
 $stmt->close();
