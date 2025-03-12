@@ -1,8 +1,8 @@
 <?php
 // Conexión a la base de datos
-$host = "localhost";
+$host = "ballast.proxy.rlwy.net:19685";
 $user = "root";
-$pass = "";  // Cambia esto si tienes contraseña
+$pass = "QbCzqolQCWFyJpCHNeotoFjmAnIwATkR";  // Cambia esto si tienes contraseña
 $db = "gestiondecarrosmac";
 
 $conn = new mysqli($host, $user, $pass, $db);

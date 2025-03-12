@@ -1,7 +1,7 @@
 <?php
-    $host = "localhost";
+    $host = "ballast.proxy.rlwy.net:19685";
     $user = "root";
-    $pass = "";
+    $pass = "QbCzqolQCWFyJpCHNeotoFjmAnIwATkR";
     $db = "gestiondecarrosmac";
 
     $conn = new mysqli($host, $user, $pass, $db);
@@ -34,7 +34,7 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
       <div class="container-fluid">
-        <a class="navbar-brand" href="invenario.php">
+        <a class="navbar-brand" href="inventario.php">
           <img src="images/mac-computadoras-logo.jpg" width="50px" height="50px" alt="" title="" />
         </a>
 
@@ -49,12 +49,10 @@
                   <div class="input-group custom-width me-2">
                     <select class="form-select custom-width" name="ub">         
                       <option value="">Ver todo</option>
-                      <option value="Almacen">Cuernavaca</option>
-                      <option value="Direccion">CDMX</option>
-                      <option value="Secretaria Academica (Direccion)">Puebla</option>
-                      <option value="Secretaria de Investigacion (Direccion)">Tijuana</option>
-
-                      
+                      <option value="cuernavaca">Cuernavaca</option>
+                      <option value="CDMX">CDMX</option>
+                      <option value="Puebla">Puebla</option>
+                      <option value="Tijuana<">Tijuana</option>
                     </select>
                     <button class="btn btn-orange" type="submit">
                       <i class="fa fa-check"></i>
@@ -72,16 +70,13 @@
                 <a href="admin-inventario_nuevo.php" class="nav-link"><i class="fas fa-plus-circle"></i><span class="nav-link-text"> Agregar nuevo</span></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="adminP1.php"><i class="fas fa-home"></i><span class="nav-link-text"> Inicio</span></a>
+                <a class="nav-link" href="inventario.php"><i class="fas fa-home"></i><span class="nav-link-text"> Inicio</span></a>
               </li>
                             <li class="nav-item">
                   <a class="nav-link" href="admin-administrador.php"><i class="fas fa-users"></i>&nbsp;Usuarios</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="llaves/index.php"><i class="fas fa-box-open"></i>&nbsp;Prestamos</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="admin-bajas.php"><i class="fas fa-fw fa-swatchbook"></i><span class="nav-link-text">Bajas</span></a>
+                  <a class="nav-link" href="Macbajas.php"><i class="fas fa-fw fa-swatchbook"></i><span class="nav-link-text">Bajas</span></a>
                 </li>
                           <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-fw fa-sign-out"></i>Logout</a>
@@ -99,7 +94,7 @@
   <html lang="en">
   <head>
       <meta charset="UTF-8">
-      <title>Facultad de Artes - Sistema de Inventario</title>
+      <title>Mac computadoras - Sistema de Inventario</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <!-- Favicon -->
       <link rel="icon" type="image/jpg" href="img/images.jpg">
@@ -131,9 +126,31 @@
         <?php
         // Consulta para obtener los registros
         $sql = "SELECT * FROM materiales";
+        // Verificar si hay término de búsqueda
+        if (isset($_GET['buscar']) && !empty($_GET['buscar'])) {
+            $busqueda = $conn->real_escape_string(trim($_GET['buscar']));
+            $sql = "SELECT * FROM materiales WHERE 
+                    LOWER(n_resguardo) LIKE LOWER('%$busqueda%') OR 
+                    LOWER(codigo_material) LIKE LOWER('%$busqueda%') OR 
+                    LOWER(tipo_activo) LIKE LOWER('%$busqueda%') OR 
+                    LOWER(descripcion) LIKE LOWER('%$busqueda%') OR 
+                    LOWER(ubicacion) LIKE LOWER('%$busqueda%') OR 
+                    LOWER(observaciones) LIKE LOWER('%$busqueda%')";
+        }
+        
+        // Verificar si hay filtro de ubicación
+        if (isset($_GET['ub']) && !empty($_GET['ub'])) {
+            $ubicacion = $conn->real_escape_string($_GET['ub']);
+            if (strpos($sql, 'WHERE') !== false) {
+                $sql .= " AND ubicacion = '$ubicacion'";
+            } else {
+                $sql .= " WHERE ubicacion = '$ubicacion'";
+            }
+        }
+        
         $resultado = $conn->query($sql);
         $contador = 1;
-
+        
         if ($resultado->num_rows > 0) {
             while ($fila = $resultado->fetch_assoc()) {
                 echo "<tr>";
@@ -143,19 +160,21 @@
                 echo "<td>{$fila['tipo_activo']}</td>";
                 echo "<td>{$fila['descripcion']}</td>";
                 echo "<td>{$fila['ubicacion']}</td>";
-                echo "<td>{$fila['observaciones']}</td>";
+                echo "<td style='white-space: pre-wrap;'>" . nl2br(htmlspecialchars($fila['observaciones'])) . "</td>";
                 echo "<td><img src='fotos/{$fila['foto']}' width='200'></td>";
                 echo "<td>{$fila['fecha_alta']}</td>";
-                echo "<td>
-                        <a href='editar.php?id={$fila['id']}'>Editar</a> | 
-                        <a href='eliminar.php?id={$fila['id']}'>Eliminar</a>
-                        <a href='eliminar.php?id={$fila['id']}'>baja</a>
+                echo "<td class='text-center align-middle'>
+                <div class='btn-group-vertical mb-2' role='group'>
+                        <a href='editar.php?id={$fila['id']}'class='btn btn-danger btn-sm mb-2'>Editar</a>  
+                        <a href='eliminar.php?id={$fila['id']}' class='btn btn-danger btn-sm mb-2' onclick='return confirm(\"¿Estás seguro de que deseas eliminar este artículo?\");'>Eliminar</a>
+                        <a href='baja.php?id={$fila['id']}'class='btn btn-danger btn-sm mb-2' onclick='return confirm(\"¿Estás seguro de que deseas eliminar este artículo?\");' >baja</a>
+                        <a href='verMas.php?id={$fila['id']}'class='btn btn-danger btn-sm mb-2'>ver más</a>
                       </td>";
                 echo "</tr>";
                 $contador++;
             }
         } else {
-            echo "<tr><td colspan='10'>No hay datos registrados.</td></tr>";
+            echo "<tr><td colspan='10'>No hay datos registrados que coincidan con la búsqueda.</td></tr>";
         }
         ?>
                       </thead>

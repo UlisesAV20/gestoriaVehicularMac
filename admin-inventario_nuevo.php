@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventario: Nuevo Material</title>
+    <title>Agregar un coche nuevo</title>
 
 
     <!-- Estilos CSS integrados directamente para evitar confusiones -->
@@ -156,7 +156,7 @@
 <body>
     <div class="content-wrapper">
         <div class="container-fluid">
-            <h1 class="titulo">Nuevo Material de Inventario</h1>
+            <h1 class="titulo">Nuevo registro de coches</h1>
             <h3 class="titulo">AVISO: No utilizar comillas simples, dobles o algun otro caracter especial.</h3>
             <form action="inventario_proceso_agregar.php" method="POST" enctype="multipart/form-data">
                 <div class="form-wrapper">
@@ -176,7 +176,7 @@
 
                         <strong><label for="Ubicacion1">Ubicación:</label></strong>
                         <select class="input-field" id="Ubicacion1" name="Ubicacion1" required>
-                        <option value="Prestado" > cuernavaca</option>
+                        <option value="cuernavaca" > cuernavaca</option>
                         <option value="CDMX" > CDMX</option>
                         <option value="Puebla" > Puebla</option>
                         <option value="Tijuana" > Tijuana</option>
