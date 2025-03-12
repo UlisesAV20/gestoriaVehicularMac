@@ -73,7 +73,7 @@
                 <a class="nav-link" href="inventario.php"><i class="fas fa-home"></i><span class="nav-link-text"> Inicio</span></a>
               </li>
                             <li class="nav-item">
-                  <a class="nav-link" href="admin-administrador.php"><i class="fas fa-users"></i>&nbsp;Usuarios</a>
+                  <a class="nav-link" href="usuarios.php"><i class="fas fa-users"></i>&nbsp;Usuarios</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="Macbajas.php"><i class="fas fa-fw fa-swatchbook"></i><span class="nav-link-text">Bajas</span></a>
