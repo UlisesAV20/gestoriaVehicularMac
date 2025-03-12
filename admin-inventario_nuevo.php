@@ -156,44 +156,72 @@
 <body>
     <div class="content-wrapper">
         <div class="container-fluid">
-            <h1 class="titulo">Nuevo registro de coches</h1>
-            <h3 class="titulo">AVISO: No utilizar comillas simples, dobles o algun otro caracter especial.</h3>
+            <h1 class="titulo">Nuevo registro de vehículos</h1>
+            <h3 class="titulo">AVISO: No utilizar comillas simples, dobles o algún otro caracter especial.</h3>
             <form action="inventario_proceso_agregar.php" method="POST" enctype="multipart/form-data">
                 <div class="form-wrapper">
                     <!-- Columna Izquierda -->
                     <div class="form-left">
-                        <strong><label for="n_resguardo" >Número de Resguardo:</label></strong>
-                        <input type="text" class="input-field" id="n_resguardo" name="n_resguardo" required>
+                        <strong><label for="placa">Placa:</label></strong>
+                        <input type="text" class="input-field" id="placa" name="placa" required>
 
-                        <strong><label for="codigo_material">Número de Inventario:</label></strong>
-                        <input type="text" class="input-field" id="codigo_material" name="codigo_material" required>
+                        <strong><label for="vin">Número de serie (VIN):</label></strong>
+                        <input type="text" class="input-field" id="vin" name="vin" required>
 
-                        <strong><label for="Tactivo">Tipo de Activo:</label></strong>
-                        <input type="text" class="input-field" id="Tactivo" name="Tactivo" required>
-
-                        <strong><label for="descripcion">Descripción:</label></strong>
-                        <textarea class="textarea-field" id="descripcion" name="descripcion" required></textarea>
-
-                        <strong><label for="Ubicacion1">Ubicación:</label></strong>
-                        <select class="input-field" id="Ubicacion1" name="Ubicacion1" required>
+                        <strong><label for="tipo_vehiculo">Tipo de vehículo:</label></strong>
+                        <select class="input-field" id="tipo_vehiculo" name="tipo_vehiculo" required>
+                            <option value="">Seleccione tipo</option>
+                            <option value="Sedan">Sedán</option>
+                            <option value="SUV">SUV</option>
+                            <option value="Pickup">Pickup</option>
+                            <option value="Van">Van</option>
+                            <option value="Camion">Camión</option>
+                        </select>
+                        <strong><label for="ubicacion">Ubicación:</label></strong>
+                        <select class="input-field" id="ubicacion" name="ubicacion" required>
                         <option value="cuernavaca" > cuernavaca</option>
                         <option value="CDMX" > CDMX</option>
                         <option value="Puebla" > Puebla</option>
                         <option value="Tijuana" > Tijuana</option>
 
                         </select>
+                        
+                        <strong><label for="marca">Marca:</label></strong>
+                        <input type="text" class="input-field" id="marca" name="marca" required>
+
+                        <strong><label for="modelo">Modelo:</label></strong>
+                        <input type="text" class="input-field" id="modelo" name="modelo" required>
+
+                        <strong><label for="anio">Año:</label></strong>
+                        <input type="number" class="input-field" id="anio" name="anio" min="1900" max="2024" required>
+
+                        <strong><label for="color">Color:</label></strong>
+                        <input type="text" class="input-field" id="color" name="color" required>
                     </div>
 
                     <!-- Columna Derecha -->
                     <div class="form-right">
-                        <strong><label for="ubicacion">Descripción de Observaciones:</label></strong>
-                        <textarea class="textarea-field" id="ubicacion" name="ubicacion" required></textarea>
+                        <strong><label for="kilometraje">Kilometraje:</label></strong>
+                        <input type="number" class="input-field" id="kilometraje" name="kilometraje" step="0.01" required>
 
-                        <strong><label for="foto">Agrega una foto:</label></strong>
-                        <input type="file" class="input-field" id="foto" name="foto">
+                        <strong><label for="descripcion">Descripción:</label></strong>
+                        <textarea class="textarea-field" id="descripcion" name="descripcion" required></textarea>
 
-                        <strong><label for="fecha_alta">Fecha de alta:</label></strong>
-                        <input type="date" class="input-field" id="fecha_alta" name="fecha_alta" required>
+                        <strong><label for="observaciones">Observaciones:</label></strong>
+                        <textarea class="textarea-field" id="observaciones" name="observaciones" required></textarea>
+
+                        <strong><label for="fecha_compra">Fecha de compra:</label></strong>
+                        <input type="date" class="input-field" id="fecha_compra" name="fecha_compra" required>
+
+                        <strong><label for="foto">Foto del vehículo:</label></strong>
+                        <input type="file" class="input-field" id="foto" name="foto" accept="image/*">
+
+                        <strong><label for="estado_actual">Estado actual:</label></strong>
+                        <select class="input-field" id="estado_actual" name="estado_actual" required>
+                            <option value="Activo">Activo</option>
+                            <option value="En reparación">En reparación</option>
+                            <option value="Dado de baja">Dado de baja</option>
+                        </select>
                     </div>
                 </div>
 

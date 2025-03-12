@@ -1,7 +1,7 @@
 <?php
-$host = "localhost";
+$host = "ballast.proxy.rlwy.net:19685";
 $user = "root";
-$pass = "";
+$pass = "QbCzqolQCWFyJpCHNeotoFjmAnIwATkR";
 $db = "gestiondecarrosmac";
 
 $conn = new mysqli($host, $user, $pass, $db);

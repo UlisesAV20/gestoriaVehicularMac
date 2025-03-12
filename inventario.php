@@ -111,9 +111,9 @@
                       <thead class="thead-dark font-weight-bold">
                       <tr>
             <th>#</th>
-            <th>Número de Resguardo</th>
-            <th>Número de Inventario</th>
-            <th>Tipo de Activo</th>
+            <th>Placa</th>
+            <th>Número de serie (VIN)</th>
+            <th>Tipo de vehículo</th>
             <th>Descripción</th>
             <th>Ubicación</th>
             <th>Observaciones</th>
@@ -125,27 +125,16 @@
     <tbody>
         <?php
         // Consulta para obtener los registros
-        $sql = "SELECT * FROM materiales";
+        $sql = "SELECT * FROM vehiculos";
         // Verificar si hay término de búsqueda
         if (isset($_GET['buscar']) && !empty($_GET['buscar'])) {
             $busqueda = $conn->real_escape_string(trim($_GET['buscar']));
-            $sql = "SELECT * FROM materiales WHERE 
-                    LOWER(n_resguardo) LIKE LOWER('%$busqueda%') OR 
-                    LOWER(codigo_material) LIKE LOWER('%$busqueda%') OR 
-                    LOWER(tipo_activo) LIKE LOWER('%$busqueda%') OR 
+            $sql = "SELECT * FROM vehiculos WHERE 
+                    LOWER(placa) LIKE LOWER('%$busqueda%') OR 
+                    LOWER(vin) LIKE LOWER('%$busqueda%') OR 
+                    LOWER(tipo_vehiculo) LIKE LOWER('%$busqueda%') OR 
                     LOWER(descripcion) LIKE LOWER('%$busqueda%') OR 
-                    LOWER(ubicacion) LIKE LOWER('%$busqueda%') OR 
                     LOWER(observaciones) LIKE LOWER('%$busqueda%')";
-        }
-        
-        // Verificar si hay filtro de ubicación
-        if (isset($_GET['ub']) && !empty($_GET['ub'])) {
-            $ubicacion = $conn->real_escape_string($_GET['ub']);
-            if (strpos($sql, 'WHERE') !== false) {
-                $sql .= " AND ubicacion = '$ubicacion'";
-            } else {
-                $sql .= " WHERE ubicacion = '$ubicacion'";
-            }
         }
         
         $resultado = $conn->query($sql);
@@ -155,9 +144,9 @@
             while ($fila = $resultado->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td>{$contador}</td>";
-                echo "<td>{$fila['n_resguardo']}</td>";
-                echo "<td>{$fila['codigo_material']}</td>";
-                echo "<td>{$fila['tipo_activo']}</td>";
+                echo "<td>{$fila['placa']}</td>";
+                echo "<td>{$fila['vin']}</td>";
+                echo "<td>{$fila['tipo_vehiculo']}</td>";
                 echo "<td>{$fila['descripcion']}</td>";
                 echo "<td>{$fila['ubicacion']}</td>";
                 echo "<td style='white-space: pre-wrap;'>" . nl2br(htmlspecialchars($fila['observaciones'])) . "</td>";
@@ -165,16 +154,16 @@
                 echo "<td>{$fila['fecha_alta']}</td>";
                 echo "<td class='text-center align-middle'>
                 <div class='btn-group-vertical mb-2' role='group'>
-                        <a href='editar.php?id={$fila['id']}'class='btn btn-danger btn-sm mb-2'>Editar</a>  
-                        <a href='eliminar.php?id={$fila['id']}' class='btn btn-danger btn-sm mb-2' onclick='return confirm(\"¿Estás seguro de que deseas eliminar este artículo?\");'>Eliminar</a>
-                        <a href='baja.php?id={$fila['id']}'class='btn btn-danger btn-sm mb-2' onclick='return confirm(\"¿Estás seguro de que deseas eliminar este artículo?\");' >baja</a>
-                        <a href='verMas.php?id={$fila['id']}'class='btn btn-danger btn-sm mb-2'>ver más</a>
+                        <a href='editar.php?id={$fila['id']}' class='btn btn-danger btn-sm mb-2'>Editar</a>  
+                        <a href='eliminar.php?id={$fila['id']}' class='btn btn-danger btn-sm mb-2' onclick='return confirm(\"¿Estás seguro de que deseas eliminar este vehículo?\");'>Eliminar</a>
+                        <a href='baja.php?id={$fila['id']}' class='btn btn-danger btn-sm mb-2' onclick='return confirm(\"¿Estás seguro de que deseas dar de baja este vehículo?\");'>Baja</a>
+                        <a href='verMas.php?id={$fila['id']}' class='btn btn-danger btn-sm mb-2'>Ver más</a>
                       </td>";
                 echo "</tr>";
                 $contador++;
             }
         } else {
-            echo "<tr><td colspan='10'>No hay datos registrados que coincidan con la búsqueda.</td></tr>";
+            echo "<tr><td colspan='9'>No hay vehículos registrados que coincidan con la búsqueda.</td></tr>";
         }
         ?>
                       </thead>
