@@ -13,7 +13,7 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
     
     // Primero obtenemos la información de la foto para eliminarla
-    $sql = "SELECT foto FROM materiales WHERE id = $id";
+    $sql = "SELECT foto FROM vehiculos WHERE id = $id";
     $resultado = $conn->query($sql);
     
     if ($resultado->num_rows > 0) {
@@ -26,13 +26,15 @@ if (isset($_GET['id'])) {
         }
         
         // Eliminamos el registro de la base de datos
-        $sql = "DELETE FROM materiales WHERE id = $id";
+        $sql = "DELETE FROM vehiculos WHERE id = $id";
         if ($conn->query($sql) === TRUE) {
             header("Location: inventario.php");
             exit();
         } else {
-            echo "Error al eliminar el registro: " . $conn->error;
+            echo "Error al eliminar el vehículo: " . $conn->error;
         }
+    } else {
+        echo "No se encontró el vehículo especificado.";
     }
 } else {
     header("Location: inventario.php");

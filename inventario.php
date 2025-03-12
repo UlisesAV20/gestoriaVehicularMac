@@ -126,15 +126,28 @@
         <?php
         // Consulta para obtener los registros
         $sql = "SELECT * FROM vehiculos";
-        // Verificar si hay término de búsqueda
+        
+        // Verificar búsqueda por ubicación y término de búsqueda
+        if (isset($_GET['ub']) && !empty($_GET['ub'])) {
+            $ubicacion = $conn->real_escape_string($_GET['ub']);
+            $sql = "SELECT * FROM vehiculos WHERE ubicacion = '$ubicacion'";
+        }
+        
         if (isset($_GET['buscar']) && !empty($_GET['buscar'])) {
             $busqueda = $conn->real_escape_string(trim($_GET['buscar']));
-            $sql = "SELECT * FROM vehiculos WHERE 
-                    LOWER(placa) LIKE LOWER('%$busqueda%') OR 
-                    LOWER(vin) LIKE LOWER('%$busqueda%') OR 
-                    LOWER(tipo_vehiculo) LIKE LOWER('%$busqueda%') OR 
-                    LOWER(descripcion) LIKE LOWER('%$busqueda%') OR 
-                    LOWER(observaciones) LIKE LOWER('%$busqueda%')";
+            if (strpos($sql, 'WHERE') !== false) {
+                $sql .= " AND (LOWER(placa) LIKE LOWER('%$busqueda%') OR 
+                        LOWER(vin) LIKE LOWER('%$busqueda%') OR 
+                        LOWER(tipo_vehiculo) LIKE LOWER('%$busqueda%') OR 
+                        LOWER(descripcion) LIKE LOWER('%$busqueda%') OR 
+                        LOWER(observaciones) LIKE LOWER('%$busqueda%'))";
+            } else {
+                $sql .= " WHERE (LOWER(placa) LIKE LOWER('%$busqueda%') OR 
+                        LOWER(vin) LIKE LOWER('%$busqueda%') OR 
+                        LOWER(tipo_vehiculo) LIKE LOWER('%$busqueda%') OR 
+                        LOWER(descripcion) LIKE LOWER('%$busqueda%') OR 
+                        LOWER(observaciones) LIKE LOWER('%$busqueda%'))";
+            }
         }
         
         $resultado = $conn->query($sql);
@@ -150,7 +163,12 @@
                 echo "<td>{$fila['descripcion']}</td>";
                 echo "<td>{$fila['ubicacion']}</td>";
                 echo "<td style='white-space: pre-wrap;'>" . nl2br(htmlspecialchars($fila['observaciones'])) . "</td>";
-                echo "<td><img src='fotos/{$fila['foto']}' width='200'></td>";
+                // Modificación para la visualización de imágenes
+                if (!empty($fila['foto'])) {
+                    echo "<td><img src='fotos/{$fila['foto']}' width='200' alt='Foto del vehículo' onerror=\"this.src='images/placeholder.jpg'\"></td>";
+                } else {
+                    echo "<td><img src='images/placeholder.jpg' width='200' alt='Sin imagen'></td>";
+                }
                 echo "<td>{$fila['fecha_alta']}</td>";
                 echo "<td class='text-center align-middle'>
                 <div class='btn-group-vertical mb-2' role='group'>
